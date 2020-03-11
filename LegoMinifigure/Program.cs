@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using LegoMinifigure.Composition.Legs;
+using LegoMinifigure.Composition.Head;
+using LegoMinifigure.Composition.Torso;
+
 
 namespace LegoMinifigure
 {
@@ -6,11 +11,47 @@ namespace LegoMinifigure
     {
         static void Main(string[] args)
         {
-            var astronaut = new SpaceGuy("Space Person", "Space Janitor");
-            var astronaut2 = new SpaceGuy("Space Lady", "Space Commander");
+            var head = new ZoeHead
+            {
+                FacialExpression = "smiling",
+                Color = LegoColor.Orange,
+                EyeColor = LegoColor.Green,
+                Helmeted = true
+            };
 
-            astronaut.DoYourJob();
-            astronaut2.DoYourJob();
+            var legs = new AstronautLegs
+            {
+                HasPants = true,
+                Shoes = ShoeType.Boots,
+
+            };
+
+            var atorso = new AstronautTorso
+            {
+                ChiseledAbs = true,
+                NumberOfArms = 4,
+                Shirted = true,
+                HandType = HandType.Xbuster
+
+            }; 
+            
+            var dtorso = new AstronautTorso
+            {
+                ChiseledAbs = true,
+                NumberOfArms = 4,
+                Shirted = true,
+                HandType = HandType.Xbuster
+            };
+
+            var astronaut = new Astronaut("Space Person", "Space Janitor", head, atorso, legs);
+            var astronaut2 = new Astronaut("Space Lady", "Space Commander", head, dtorso, legs);
+
+            astronaut.DoYourJob(25);
+            astronaut2.DoYourJob(15);
+
+
+            atorso.Breathe();
+            dtorso.Breathe();
 
             // can't do this
             // astronaut.Job = "Commander";
@@ -28,6 +69,16 @@ namespace LegoMinifigure
             casper.Haunt("Whipstaff Manor");
             casper.Spook();
 
+
+            var torsos = new List<TorsoBase>();
+            torsos.Add(dtorso);
+            torsos.Add(atorso);
+
+            foreach (var torso in torsos)
+            {
+                torso.Breathe();
+                torso.Flex();
+            }
         }
     }
 }
